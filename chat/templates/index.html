@@ -1,11 +1,31 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'CSS/estilos.css'%}">
     <title>Document</title>
 </head>
 <body>
-    
+    <nav class="navegacion">
+        <div class="contenedor-de-nav" >IA PARA ORGANIZACIONES</div>
+    </nav>
+    <div class="contenedor-main">
+        <h1>Chatbot</h1>
+        <h3>Descripcion: </h3>
+        <p>Probando chats para la opcion de grado</p>
+        <h3>Integrantes:</h3>
+        <p>Johand Esteban Castro Rodriguez</p>
+        <p>Michael Steven Parrado</p>
+        <button id="btn-chat" type="button" class="btn-abrir">INICIAR CHAT</button>
+    </div>
+    <dialog class="chat-modal" id="chat-modal" close>
+        <p>VENTA PRODUCTOS LACTEOS</p>
+            <div class="vista-chat">
+            </div>
+        <button id="btn-cerrar-chat" class="btn-cerrar">CERRAR</button>
+    </dialog>
+    <script src="{% static 'JS/face.js' %}" defer></script>
 </body>
 </html>

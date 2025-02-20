@@ -13,6 +13,7 @@ class botest():
         self._SALUDOS_OUTPUTS = ["Hola", "Hola, ¿Qué tal?", "Hola, ¿Cómo te puedo ayudar?", "Hola, encantado de hablar contigo"]
         self._recursos={'punkt':False,'wordnet':False,'stopwords':False,'punk_tab':False}
         self._status_bot={"estado":False,"msg":""}
+        self._saludo_inicial=""
         try:
             self.instalacion_recursos()
             with open(r"chat/static/corpus/Corpus_crucero.txt","r",errors='ignore') as file:
@@ -95,9 +96,19 @@ class botest():
             if word.lower() in self._SALUDOS_INPUTS:
                 return random.choice(self._SALUDOS_OUTPUTS)
 
-    def bucle_principal(self):
-        if not self._status_bot['estado']: return
-        print("ROBOT: Mi nombre es ROBOT. Contestaré a tus preguntas acerca de sus vacaciones en el crucero. Si quieres salir, escribe 'salir' ")
+    def bucle_principal(self) -> str:
+        if not self._status_bot['estado']:
+            return '''
+            Lo siento no estoy configurado correctamente aun contacta con
+            soporte@soporte.com para socluionar este incoveniente :(
+            '''
+        if self._saludo_inicial=="":
+            return '''
+            Bienvenido Mi nombre es MUUU-BOT.
+            Contestaré a tus preguntas acerca de tus vacaciones
+            en el crucero.
+            estare encantado de ayudarte
+            '''
         while True:
             user_response = input()
             user_response = user_response.lower() #Convertimos a minúscula
