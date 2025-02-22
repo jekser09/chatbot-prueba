@@ -5,13 +5,12 @@ import string
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from nltk.corpus import stopwords
-from nltk.data import find
 
 class botest():
     def __init__(self):
         self._SALUDOS_INPUTS = ("hola", "buenas", "saludos", "qué tal", "hey","buenos dias",)
         self._SALUDOS_OUTPUTS = ["Hola", "Hola, ¿Qué tal?", "Hola, ¿Cómo te puedo ayudar?", "Hola, encantado de hablar contigo"]
-        self._recursos={'punkt':False,'wordnet':False,'stopwords':False,'punk_tab':False}
+        self._recursos={'punkt':False,'wordnet':False,}
         self._status_bot={"estado":False,"msg":""}
         self._saludo_inicial=""
         try:
@@ -20,40 +19,21 @@ class botest():
                 self._raw=file.read()
             self._status_bot["estado"]=True
             self._status_bot["msg"]+="Configuraciones del bot correctas\n"
-            self.preprocesamiento_txt()
+        except LookupError as le:
+            self._status_bot["msg"]+=f"Error al instalar recursos {le}"
         except Exception as e:
             self._status_bot["msg"]+=f"Error al cargar corpus >>> {e}\n"
-        
+        finally:
+            self.preprocesamiento_txt()        
 
     def __str__(self):
         return self._status_bot['msg']
 
     def instalacion_recursos(self):
         print("Verificando recursos...\n")
-        for rec in self._recursos:
-            if not self._recursos[rec]:
-                try:
-                    # Verificar si el recurso ya está instalado
-                    find(rec)
-                    self._recursos[rec] = True
-                    print(f"✓ Recurso '{rec}' ya instalado.")
-                except LookupError:
-                    # Si no está instalado, intentar descargarlo
-                    print(f"⚡ Recurso '{rec}' no encontrado. Descargando...")
-                    try:
-                        nltk.download(rec)
-                        self._recursos[rec] = True
-                        print(f"✔ Recurso '{rec}' descargado exitosamente.\n")
-                    except Exception as e: pass
-
-        # Verificar si todos los recursos se instalaron
-        if all(self._recursos.values()):
-            self._status_bot["estado"]=True
-            self._status_bot["msg"]+="Todos los recursos fueron instalados correctamente\n"
-        else:
-            faltantes = [r for r, estado in self._recursos.items() if not estado]
-            self._status_bot["estado"]=False
-            self._status_bot["msg"]+="Recursos faltantes: {', '.join(faltantes)}\n"
+        nltk.download("punkt")
+        nltk.download("wordnet")
+        nltk.download("punkt_tab")
 
     def preprocesamiento_txt(self):
         self._raw=self._raw.lower()# convertir en minúscula
@@ -82,11 +62,10 @@ class botest():
         flat = vals.flatten()
         flat.sort()
         req_tfidf = flat[-2]
-        
+
         if(req_tfidf==0):
             robo_response=robo_response+"Lo siento, no te he entendido. Si no puedo responder a lo que busca póngase en contacto con soporte@soporte.com"
             return robo_response
-
         else:
             robo_response = robo_response+self._sent_tokens[idx]
             return robo_response
@@ -98,17 +77,17 @@ class botest():
 
     def bucle_principal(self) -> str:
         if not self._status_bot['estado']:
-            return '''
+            print('''
             Lo siento no estoy configurado correctamente aun contacta con
             soporte@soporte.com para socluionar este incoveniente :(
-            '''
+            ''')
         if self._saludo_inicial=="":
-            return '''
+            print('''
             Bienvenido Mi nombre es MUUU-BOT.
             Contestaré a tus preguntas acerca de tus vacaciones
             en el crucero.
             estare encantado de ayudarte
-            '''
+            ''')
         while True:
             user_response = input()
             user_response = user_response.lower() #Convertimos a minúscula
