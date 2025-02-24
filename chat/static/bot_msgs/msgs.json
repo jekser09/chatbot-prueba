@@ -8,5 +8,8 @@
     "PRODUCTOS_INPUT":["productos","que productos tienes","dime los productos","que manejan","que tienes de inventario","inventario","que vendes","que venden","que tienen","que tienes","quiero algo","se me antoja algo"],
     "PRODUCTOS_OUTPUT":["mantequilla","mantequilla clarificada","yogurt de fresa","yogurt de manzana","yogurt de pera","yogurt de melocoton","yogurt de kiwi","yogurt de cereza","yogurt de mango","yogurt de banano","yogurt de chocolate","yogurt de vainilla","yogurt griego sin dulce","queso campesino","queso costeño","queso mozarella","queso azul","queso pera","queso 7 cueros","arequipe","crema leche","leche condensada","leche deslactosada","leche entera"],
     "DESPEDIDA_INPUT":["adios","hasta luego","me voy","salir","nos vemos pronto","que te vaya bien"],
-    "DESPEDIDA_OUTPUT":["con mucho gusto","que vuelvas pronto","si necesitas algo mas me vuelves a llamar","encantado de conocerte","un gusto","hasta luego :D","gracias por gastar tu dinero","nos caiste bien pero nos cae mejor tu dinero","capitalismo rules"]
+    "DESPEDIDA_OUTPUT":["con mucho gusto","que vuelvas pronto","si necesitas algo mas me vuelves a llamar","hasta luego :D","capitalismo rules"],
+    "GRACIAS_INPUT":["gracias","muchas gracias","te agradezco","eres el mejor","eres increible"],
+    "GRACIAS_OUTPUT":["con mucho gusto","si necesitas algo mas me vuelves a llamar","un gusto","gracias por gastar tu dinero","nos caiste bien pero nos cae mejor tu dinero","de nada","encantado de conocerte","no me interesa sigue comprando"],
+    "PACIENCIA_OUTPUT":["Otra vez va a joder este man","pero le falto la primaria o que?","estoy cansando y este no se calla","tan dificil es comprar un queso?","ay dios santo no sabe sumar y quiere comprar",".l.","otra vez este pendejo"]
 }

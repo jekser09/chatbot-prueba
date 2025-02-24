@@ -78,21 +78,23 @@ class botest():
             if word.lower() in self._textos["CHISTES_INPUT"]:
                 return random.choice(self._textos["CHISTES_OUTPUT"])
             if word.lower() in self._textos["PRODUCTOS_INPUT"]:
-                return "Nuestros productos son:".join(self._textos["PRODUCTOS_OUTPUT"])
+                return "".join([x+".\n" for x in self._textos["PRODUCTOS_OUTPUT"]])
             
 
     def bucle_principal(self):
         if not self._status_bot['estado']:
             print(self._textos["ERROR_CONF"])
-            return
+            return ""
         print(self._textos["BIENVENIDA"])
+        paciencia=random.randint(5,20)
         while True:
-            user_response = input()
-            user_response = user_response.lower() #Convertimos a minúscula
-            
-            if(user_response.lower() not in self._textos["DESPEDIDA_INPUT"]):
-                if(user_response=='gracias' or user_response=='muchas gracias'): #Se podría haber definido otra función de coincidencia manual
-                    print("MUU-BOT: No hay de qué")
+            if paciencia==0:
+                print(random.choice(self._textos["PACIENCIA_OUTPUT"]+"\n"))
+                paciencia=random.randint(5,20)
+            user_response = input().lower()
+            if(user_response not in self._textos["DESPEDIDA_INPUT"]):
+                if(user_response in self._textos["GRACIAS_INPUT"]): #Se podría haber definido otra función de coincidencia manual
+                    print(self._textos["GRACIAS_OUTPUT"])
                 else:
                     if(self.respuestas_por_defecto(user_response)!=None):
                         print("MUU-BOT: "+self.respuestas_por_defecto(user_response))
@@ -102,4 +104,5 @@ class botest():
                         self._sent_tokens.remove(user_response) # para eliminar del corpus la respuesta del usuario y volver a evaluar con el CORPUS limpio
             else:
                 print(random.choice(self._textos["DESPEDIDA_OUTPUT"]))
-                break
+                return ""
+            paciencia-=1
