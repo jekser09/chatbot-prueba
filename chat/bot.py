@@ -5,24 +5,25 @@ import string
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from nltk.corpus import stopwords
+import json
 
 class botest():
     def __init__(self):
-        self._SALUDOS_INPUTS = ("hola", "buenas", "saludos", "qué tal", "hey","buenos dias",)
-        self._SALUDOS_OUTPUTS = ["Hola", "Hola, ¿Qué tal?", "Hola, ¿Cómo te puedo ayudar?", "Hola, encantado de hablar contigo"]
-        self._recursos={'punkt':False,'wordnet':False,}
         self._status_bot={"estado":False,"msg":""}
-        self._saludo_inicial=""
         try:
             self.instalacion_recursos()
-            with open(r"chat/static/corpus/Corpus_crucero.txt","r",errors='ignore') as file:
+            with open("chat/static/bot_msgs/msgs.json","r",encoding="utf-8") as filejson:
+                self._textos=json.load(filejson)
+            with open(r"chat/static/corpus/Corpus_lacteos.txt","r",errors='ignore') as file:
                 self._raw=file.read()
             self._status_bot["estado"]=True
             self._status_bot["msg"]+="Configuraciones del bot correctas\n"
         except LookupError as le:
             self._status_bot["msg"]+=f"Error al instalar recursos {le}"
+        except FileNotFoundError as fe:
+            self._status_bot["msg"]+=f"Error al cargar textos {fe}"
         except Exception as e:
-            self._status_bot["msg"]+=f"Error al cargar corpus >>> {e}\n"
+            self._status_bot["msg"]+=f"Error inesperado {e}\n"
         finally:
             self.preprocesamiento_txt()        
 
@@ -64,44 +65,41 @@ class botest():
         req_tfidf = flat[-2]
 
         if(req_tfidf==0):
-            robo_response=robo_response+"Lo siento, no te he entendido. Si no puedo responder a lo que busca póngase en contacto con soporte@soporte.com"
+            robo_response=robo_response+"Lo siento, no te he entendido. no puedo responder a lo que buscas ponte en contacto con soporte@soporte.com"
             return robo_response
         else:
             robo_response = robo_response+self._sent_tokens[idx]
             return robo_response
 
-    def saludos(self,sentence):
+    def respuestas_por_defecto(self,sentence):
         for word in sentence.split():
-            if word.lower() in self._SALUDOS_INPUTS:
-                return random.choice(self._SALUDOS_OUTPUTS)
+            if word.lower() in self._textos["SALUDOS_INPUT"]:
+                return random.choice(self._textos["SALUDOS_OUTPUT"])
+            if word.lower() in self._textos["CHISTES_INPUT"]:
+                return random.choice(self._textos["CHISTES_OUTPUT"])
+            if word.lower() in self._textos["PRODUCTOS_INPUT"]:
+                return "Nuestros productos son:".join(self._textos["PRODUCTOS_OUTPUT"])
+            
 
-    def bucle_principal(self) -> str:
+    def bucle_principal(self):
         if not self._status_bot['estado']:
-            print('''
-            Lo siento no estoy configurado correctamente aun contacta con
-            soporte@soporte.com para socluionar este incoveniente :(
-            ''')
-        if self._saludo_inicial=="":
-            print('''
-            Bienvenido Mi nombre es MUUU-BOT.
-            Contestaré a tus preguntas acerca de tus vacaciones
-            en el crucero.
-            estare encantado de ayudarte
-            ''')
+            print(self._textos["ERROR_CONF"])
+            return
+        print(self._textos["BIENVENIDA"])
         while True:
             user_response = input()
             user_response = user_response.lower() #Convertimos a minúscula
             
-            if(user_response!='salir'):
+            if(user_response.lower() not in self._textos["DESPEDIDA_INPUT"]):
                 if(user_response=='gracias' or user_response=='muchas gracias'): #Se podría haber definido otra función de coincidencia manual
-                    print("ROBOT: No hay de qué")
+                    print("MUU-BOT: No hay de qué")
                 else:
-                    if(self.saludos(user_response)!=None): #Si la palabra insertada por el usuario es un saludo (Coincidencias manuales definidas previamente)
-                        print("ROBOT: "+self.saludos(user_response))
+                    if(self.respuestas_por_defecto(user_response)!=None):
+                        print("MUU-BOT: "+self.respuestas_por_defecto(user_response))
                     else: #Si la palabra insertada no es un saludo --> CORPUS
-                        print("ROBOT: ",end="") 
+                        print("MUU-BOT: ",end="") 
                         print(self.response(user_response))
                         self._sent_tokens.remove(user_response) # para eliminar del corpus la respuesta del usuario y volver a evaluar con el CORPUS limpio
             else:
-                print("ROBOT: Nos vemos pronto, ¡cuídate!")
+                print(random.choice(self._textos["DESPEDIDA_OUTPUT"]))
                 break
