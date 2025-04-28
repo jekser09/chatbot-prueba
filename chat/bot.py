@@ -94,7 +94,7 @@ class botest():
             user_response = input().lower()
             if(user_response not in self._textos["DESPEDIDA_INPUT"]):
                 if(user_response in self._textos["GRACIAS_INPUT"]): #Se podría haber definido otra función de coincidencia manual
-                    print(self._textos["GRACIAS_OUTPUT"])
+                    print(random.choice(self._textos["GRACIAS_OUTPUT"]))
                 else:
                     if(self.respuestas_por_defecto(user_response)!=None):
                         print("MUU-BOT: "+self.respuestas_por_defecto(user_response))
