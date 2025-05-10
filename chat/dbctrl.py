@@ -12,9 +12,19 @@ class Bot_db(fb_sql):
                 LEFT JOIN INVENTARIO i ON p.PRE_PRODUCTO = i.CODPRO
             WHERE
                 CATEGORIA!='Z'
-                AND (GRUPO=2 OR (GRUPO=99 AND LINEA=3))
+                AND GRUPO=2
                 AND p.PRE_CLIENTE=48
             ORDER BY CODPRO
         '''
         return self.buscar_todos(query=query,params=None)
-        
+
+    def get_intenciones(self):
+        query='''
+            SELECT
+                d.ID_INTENCION,
+                i.NOMBRE,
+                d.FRASE
+            FROM DATASET_CHAT d
+            JOIN INTENCIONES_CHAT i ON i.ID_INTENCION=d.ID_INTENCION
+        '''
+        return self.buscar_todos(query=query)
