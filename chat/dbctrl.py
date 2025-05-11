@@ -18,9 +18,10 @@ class Bot_db(fb_sql):
         '''
         return self.buscar_todos(query=query,params=None)
 
-    def get_intenciones(self):
+    def get_frases(self):
         query='''
             SELECT
+                d.ID_DATA,
                 d.ID_INTENCION,
                 i.NOMBRE,
                 d.FRASE

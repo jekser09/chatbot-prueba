@@ -1,0 +1,11 @@
+{
+  "labels":[
+    "CONTACTO",
+    "HORARIOS",
+    "DESPEDIDA",
+    "SALUDAR",
+    "PRODUCTOS"
+  ],
+  "threshold":0.0,
+  "positive_label":null
+}
