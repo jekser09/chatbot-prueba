@@ -18,10 +18,15 @@
         <h3>Integrantes:</h3>
         <p>Johand Esteban Castro Rodriguez</p>
         <p>Michael Steven Parrado</p>
-        <button id="btn-chat" type="button" class="btn-abrir">INICIAR CHAT</button>
+        <button id="btn-abrir" type="button"  class="btn-abrir">INICIAR CHAT</button>
     </div>
     <dialog class="chat-modal" id="chat-modal" close>
         <p>VENTA PRODUCTOS LACTEOS</p>
+        <p>{{ msg }}</p>
+        <input type="text" id="input-texto">
+        <p>Respuesta: </p>
+        <p id="id-respuesta"></p>
+        <button type="button" id="btn-chatear" class="btn-chatear">chatear</button>
             <canvas>
                 oks
             </canvas>

@@ -1,14 +1,15 @@
 import random
 import locale
-from dbctrl import Bot_db
-from nlp.bot_predictor import Predictor
-from nlp.bot_trainer import Trainer
+from .dbctrl import Bot_db
+from .nlp.bot_predictor import Predictor
+from .nlp.bot_trainer import Trainer
 from rapidfuzz import fuzz
 
 class Mubot:
 
     def __init__(self):
         self.__predictor=Predictor()
+        self.BIENVENIDA=self.__predictor.get_mensajes()['BIENVENIDA']
         self.__cargar_productos()
         locale.setlocale(locale.LC_ALL, 'es_CO.UTF-8')  # para Linux/mac
     

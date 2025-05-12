@@ -1,11 +1,32 @@
-let chat_modal=document.getElementById("chat-modal")
-let boton_chat=document.getElementById("btn-chat")
-let boton_chat_cerrar=document.getElementById("btn-cerrar-chat")
+const chat_modal=document.getElementById("chat-modal")
+const btn_abrir_modal=document.getElementById("btn-abrir")
 
-boton_chat.addEventListener("click",()=>{
+function chatear(texto){
+    let p_respuesta=chat_modal.querySelector('#id-respuesta')
+    fetch(`/conversacion/${texto}`).then(respose=>respose.json()).then(
+        respuesta=>{
+            if (respuesta.estado){
+                p_respuesta.textContent=respuesta.respuesta
+            }else{
+                p_respuesta.textContent=respuesta.error
+            }
+        }
+    ).catch(error=>{console.error("Error al realizar fetch: "+error)})
+}
+
+btn_abrir_modal.addEventListener("click",()=>{
     chat_modal.showModal()
 })
 
-boton_chat_cerrar.addEventListener("click",()=>{
-    chat_modal.close()
+chat_modal.addEventListener("click",e=>{
+    let elemento=e.target
+    if(elemento.classList.contains('btn-cerrar')){
+        chat_modal.close()
+    }else if(elemento.classList.contains('btn-chatear')){
+        let texto=chat_modal.querySelector("#input-texto").value
+        console.log(texto)
+        if(texto!=='') chatear(texto)
+    }
 })
+
+

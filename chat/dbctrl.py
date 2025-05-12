@@ -1,4 +1,4 @@
-from ctrl_firebird import fb_sql
+from .ctrl_firebird import fb_sql
 
 class Bot_db(fb_sql):
     

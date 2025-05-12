@@ -1,5 +1,5 @@
 import random
-from dbctrl import Bot_db
+from chat.dbctrl import Bot_db
 import spacy
 from spacy.training import Example
 from spacy.util import minibatch, compounding
