@@ -3,14 +3,13 @@ import locale
 from dbctrl import Bot_db
 from nlp.bot_predictor import Predictor
 from nlp.bot_trainer import Trainer
-from spacy.util import minibatch, compounding
+from rapidfuzz import fuzz
 
 class Mubot:
 
     def __init__(self):
         self.__predictor=Predictor()
         self.__cargar_productos()
-        self.__palabras_productos()
         locale.setlocale(locale.LC_ALL, 'es_CO.UTF-8')  # para Linux/mac
     
     def __cargar_productos(self)->None:   
@@ -18,33 +17,39 @@ class Mubot:
             productos=db.get_productos()
         if productos['estado']:
             self.__productos=productos['data']
+            self.__productos_dict = {
+                nombre: (id_prod, nombre, precio)
+                for id_prod, nombre, precio in self.__productos
+            }
         else:
             self.__productos=[]
-    
-    def __palabras_productos(self,)->None:
-        palabras=[]
-        for producto in self.__productos:
-            aux=producto[1].split()
-            for palabra in aux:
-                if len(palabra)>3 and not palabra.isnumeric():
-                    if 'APROX' in palabra: continue
-                    if 'TIPO' in palabra: continue
-                    if '(' in palabra: palabra=palabra.replace('(','')
-                    if ')' in palabra: palabra=palabra.replace(')','')
-                    palabras.append(palabra)   
-        self.__palabras_str=list(set(palabras))
+            self.__productos_dict={}
 
-    def __buscar_producto(self,texto:str)->list:
-        respuesta=['Si tenemos: ']
-        token_texto=texto.upper().split()
-        productos_busqueda=list(filter(lambda x: x in self.__palabras_str,token_texto))
-        if productos_busqueda:
-            if not self.__productos: return 'No tenemos productos :('
-            for producto in self.__productos:
-                for produser in productos_busqueda:
-                    if produser in producto[1]:
-                        respuesta.append(f"{producto[1]} y cuesta{locale.currency(producto[2],symbol=True,grouping=True)}")
-        return respuesta
+    def __buscar_productos(self,texto_usuario:str,umbral=55)->list:
+        texto_usuario = texto_usuario.lower()
+        encontrados = []
+        # fuzzy match
+        for id_prod, nombre_prod, precio in self.__productos:
+            nombre_normalizado = nombre_prod.lower()
+            score = fuzz.partial_ratio(nombre_normalizado, texto_usuario)
+            if score >= umbral:
+                encontrados.append((id_prod, nombre_prod, precio, score))
+        
+        if encontrados:
+            aux=['Si tenemos: ']
+            # ordenamos por score descendente
+            encontrados.sort(key=lambda x: x[3], reverse=True)
+            return aux+encontrados
+        
+        # --- Si no hay match fuerte, buscar por palabra clave ---
+        # extraer keyword (ej. "queso")
+        posibles = [(0,'No encontre el producto que querias pero te recomiendo estos: ',0)]
+        for id_prod, nombre_prod, precio in self.__productos:
+            if any(palabra in nombre_prod.lower() for palabra in texto_usuario.split()):
+                posibles.append((id_prod, nombre_prod, precio, 0))  # score 0 = sugerencia
+        if not len(posibles)==1:
+            posibles=[(0,'No tenemos el producto que solicitas :(',0)]
+        return posibles
 
     def responder(self,texto:str)->list:
         intencion=self.__predictor.predecir_intencion(texto)
@@ -54,7 +59,7 @@ class Mubot:
             if isinstance(msjs,str):
                 return [msjs]
             elif isinstance(msjs,bool):
-                return self.__buscar_producto(texto)
+                return self.__buscar_productos(texto)
             else:
                 return [random.choice(msjs)]
         else: return [self.__predictor.get_mensajes().get('ERROR')]

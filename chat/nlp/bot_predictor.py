@@ -5,7 +5,7 @@ from sklearn.metrics import classification_report
 class Predictor:
 
     def __init__(self):
-        self.UMBRAL=0.60
+        self.UMBRAL=0.70
         self.__nlp=spacy.load('chat/nlp/mubot_modelo')
         with open('chat/nlp/set_pruebas.json','r') as fjson:
             self.__pruebas=json.load(fjson)

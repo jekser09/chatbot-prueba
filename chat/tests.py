@@ -4,10 +4,6 @@ from nlp.bot_predictor import Predictor
 from mubot import Mubot
 from django.test import TestCase
 
-text='quiero comprar queso crema'
-tokenizado=['queso','crema']
-productos=['queso crema x algo']
-
 # Create your tests here.
 def prueba_entrenamiento():
     print('Entrenando...')
@@ -51,20 +47,33 @@ def productos():
 def palabras_productos():
     with Bot_db() as db:
         productos=db.get_productos()
-    palabras=[]
-    for producto in productos['data']:
-        aux=producto[1].split()
-        for palabra in aux:
-            if len(palabra)>3 and not palabra.isnumeric():
-                if 'APROX' in palabra: continue
-                if 'TIPO' in palabra: continue
-                if '(' in palabra: palabra=palabra.replace('(','')
-                if ')' in palabra: palabra=palabra.replace(')','')
-                palabras.append(palabra)   
-    print(set(palabras))
+    productos_bd=productos['data']
+    productos_dict = {
+        nombre: (id_prod, nombre, precio)
+        for id_prod, nombre, precio in productos_bd
+    }
+    while True:
+        texto=input('pregunta: ')
+        texto=texto.upper()
+        for nombre_producto in productos_dict:
+            if nombre_producto in texto:
+                print(productos_dict[nombre_producto])
+
+def prueba_string_productos():
+    consultas=[]
+    text='quiero comprar queso crema y mantequilla clarificada o queso consteno'
+    text=text.upper()
+    if ' Y ' in text:
+        aux_tex=text.split(' Y ')
+        consultas+=aux_tex
+    for tex in consultas:
+        if ' O ' in tex:
+            aux_tex=text.split(' O ')
+
 if __name__=='__main__':
     #prueba_entrenamiento()
     prueba_modelo()
     #precision_modelo()
     #productos()
     #palabras_productos()
+    #prueba_string_productos()
