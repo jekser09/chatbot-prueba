@@ -72,8 +72,8 @@ def prueba_string_productos():
 
 if __name__=='__main__':
     #prueba_entrenamiento()
-    prueba_modelo()
-    #precision_modelo()
+    #prueba_modelo()
+    precision_modelo()
     #productos()
     #palabras_productos()
     #prueba_string_productos()

@@ -16,6 +16,16 @@ def conversacion(request,texto:str):
         front['estado']=True
     else: front['error']='Este metodo no esta permitido'
     return JsonResponse(front)
+
+def estadisticas(request):
+    front={'estado':False,'error':''}
+    if request.method=='GET':
+        try:
+            front['respuesta']=mubot.estadisticas_modelo()
+            front['estado']=True
+        except Exception as e:
+            front['error']=e
+    return JsonResponse(front)
         
 
 

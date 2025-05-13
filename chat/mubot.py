@@ -37,19 +37,28 @@ class Mubot:
                 encontrados.append((id_prod, nombre_prod, precio, score))
         
         if encontrados:
-            aux=['Si tenemos: ']
+            aux='Claro que si, te ofresco:<br>'
             # ordenamos por score descendente
             encontrados.sort(key=lambda x: x[3], reverse=True)
-            return aux+encontrados
+            for x in encontrados:
+                aux+=f'{x[1]} con un valor de {x[2]}, <br>'
+            encontrados=aux
+            return aux
         
         # --- Si no hay match fuerte, buscar por palabra clave ---
         # extraer keyword (ej. "queso")
-        posibles = [(0,'No encontre el producto que querias pero te recomiendo estos: ',0)]
+        posibles = ['No encontre el producto que querias pero te recomiendo estos: <br>']
         for id_prod, nombre_prod, precio in self.__productos:
             if any(palabra in nombre_prod.lower() for palabra in texto_usuario.split()):
-                posibles.append((id_prod, nombre_prod, precio, 0))  # score 0 = sugerencia
-        if not len(posibles)==1:
-            posibles=[(0,'No tenemos el producto que solicitas :(',0)]
+                posibles.append(f'{nombre_prod} con un valor de {precio}')  # score 0 = sugerencia
+        print(posibles)
+        if len(posibles)>1:
+            aux=''
+            for x in posibles:
+                aux+=f'{x} <br>'
+            posibles=posibles
+        elif len(posibles)==1: posibles='No tenemos el producto que solicitas :('
+        else: posibles="Disculpa no te he entendido. :("
         return posibles
 
     def responder(self,texto:str)->list:
@@ -58,14 +67,16 @@ class Mubot:
             print(f'-----------------intencion: {intencion}---------------------')
             msjs=self.__predictor.get_mensajes().get(intencion[0])
             if isinstance(msjs,str):
-                return [msjs]
+                return msjs
             elif isinstance(msjs,bool):
                 return self.__buscar_productos(texto)
             else:
-                return [random.choice(msjs)]
-        else: return [self.__predictor.get_mensajes().get('ERROR')]
+                return random.choice(msjs)
+        else: return self.__predictor.get_mensajes().get('ERROR')
     
     def entrenar_modelo(self):
-        print("Entrenando...")
         Trainer(ruta="nlp/mubot_modelo")
-        print("Entrenamiento completado.")
+        return 'Entrenado'
+    
+    def estadisticas_modelo(self):
+        return self.__predictor.get_precision()

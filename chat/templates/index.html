@@ -1,10 +1,13 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'CSS/estilos.css'%}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/botui/build/botui.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/botui/build/botui-theme-default.css">
     <title>Document</title>
 </head>
 <body>
@@ -19,19 +22,13 @@
         <p>Johand Esteban Castro Rodriguez</p>
         <p>Michael Steven Parrado</p>
         <button id="btn-abrir" type="button"  class="btn-abrir">INICIAR CHAT</button>
+        <button id="btn-precision" type="button"  class="btn-precision btn-abrir">VER PRECISION</button>
     </div>
-    <dialog class="chat-modal" id="chat-modal" close>
-        <p>VENTA PRODUCTOS LACTEOS</p>
-        <p>{{ msg }}</p>
-        <input type="text" id="input-texto">
-        <p>Respuesta: </p>
-        <p id="id-respuesta"></p>
-        <button type="button" id="btn-chatear" class="btn-chatear">chatear</button>
-            <canvas>
-                oks
-            </canvas>
-        <button id="btn-cerrar-chat" class="btn-cerrar">CERRAR</button>
-    </dialog>
+    <div id="botui-app" data-msg="{{ msg }}" hidden>
+        <bot-ui></bot-ui>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <script src="https://cdn.jsdelivr.net/npm/botui/build/botui.min.js"></script>
     <script src="{% static 'JS/face.js' %}" defer></script>
 </body>
 </html>

@@ -1,32 +1,66 @@
+let botui = new BotUI('botui-app')
 const chat_modal=document.getElementById("chat-modal")
-const btn_abrir_modal=document.getElementById("btn-abrir")
+const btn_iniciar=document.getElementById("btn-abrir")
+const btn_precision=document.getElementById('btn-precision')
+const ventana_chat=document.getElementById('botui-app')
 
-function chatear(texto){
-    let p_respuesta=chat_modal.querySelector('#id-respuesta')
-    fetch(`/conversacion/${texto}`).then(respose=>respose.json()).then(
-        respuesta=>{
-            if (respuesta.estado){
-                p_respuesta.textContent=respuesta.respuesta
-            }else{
-                p_respuesta.textContent=respuesta.error
-            }
+async function chatear(texto){
+    try{
+        let respuestaBot=await fetch(`/conversacion/${texto}`)
+        if(!respuestaBot.ok) return 'Respuesta negativa del servidor'
+        let respuesta=await respuestaBot.json()
+        if(respuesta.estado){
+            return respuesta.respuesta
+        }else{
+            return respuesta.error
         }
-    ).catch(error=>{console.error("Error al realizar fetch: "+error)})
+    }catch(error){
+        return 'Ocurrio un error: '+error
+    }
 }
 
-btn_abrir_modal.addEventListener("click",()=>{
-    chat_modal.showModal()
+async function iniciarChat() {
+    await botui.message.add({
+        content: ventana_chat.dataset.msg
+    })
+    await preguntar()
+}
+
+async function preguntar() {
+    let response = await botui.action.text({
+        action:{
+            placeholder:'Escribe algo...'
+        }
+    })
+    let mubot=await chatear(response.value)
+    response = await botui.message.add({
+        type: 'html',
+        content: mubot
+    })
+    preguntar()
+}
+
+async function precision() {
+    try{
+        let respuestaBot=await fetch(`/estadistica/`)
+        if(!respuestaBot.ok) return 'Respuesta negativa del servidor'
+        let respuesta=await respuestaBot.json()
+        if(respuesta.estado){
+            return respuesta.respuesta
+        }else{
+            return respuesta.error
+        }
+    }catch(error){
+        return 'Ocurrio un error: '+error
+    }   
+}
+
+btn_iniciar.addEventListener("click",()=>{
+    ventana_chat.hidden=false
+    iniciarChat()
 })
 
-chat_modal.addEventListener("click",e=>{
-    let elemento=e.target
-    if(elemento.classList.contains('btn-cerrar')){
-        chat_modal.close()
-    }else if(elemento.classList.contains('btn-chatear')){
-        let texto=chat_modal.querySelector("#input-texto").value
-        console.log(texto)
-        if(texto!=='') chatear(texto)
-    }
+btn_precision.addEventListener("click",async ()=>{
+    console.log(await precision())
 })
-
 
