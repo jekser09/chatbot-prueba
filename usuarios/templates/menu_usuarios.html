@@ -1,0 +1,34 @@
+{% extends 'navbar.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block extra_head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'CSS/menu_usuarios_grid_contenido.css' %}">
+    {% endblock extra_head %}
+    <title>{% block title %}Menu{% endblock title %}</title>
+</head>
+
+<body>
+    {% block content %} 
+    <main id="id-prueba" class="contenedorMainContenidoMenuUsuarios">
+        {% for url_menu, descripcion in request.session.lista_menus.items %}
+            <div class="contenedorUrlfuncinalidad">
+                <a href="{% url url_menu %}"><img src="{% static 'ICONS/menu/'|add:url_menu|add:'.svg' %}">
+                    <p>{{ descripcion }}</p>
+                </a>          
+            </div>
+        {% endfor %}
+    </main>
+    <footer>
+    </footer>
+    {% endblock content %}
+    {% block extra_scripts %}
+    <script src="{% static 'JS/menu_usuarios_grid_contenido.js' %}" defer></script>
+    {% endblock extra_scripts %}
+</body>
+
+</html>

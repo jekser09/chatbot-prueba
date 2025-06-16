@@ -1,0 +1,120 @@
+.cls-1 {
+    opacity: .6;
+}
+
+.cls-1, .cls-2, .cls-3, .cls-4 {
+    fill: #fff;
+}
+
+.cls-1, .cls-5, .cls-3 {
+    mix-blend-mode: soft-light;
+}
+
+.cls-6 {
+    fill: url(#linear-gradient-15);
+}
+
+.cls-7 {
+    fill: url(#linear-gradient-13);
+}
+
+.cls-8 {
+    fill: #bfc8d6;
+}
+
+.cls-9 {
+    fill: url(#linear-gradient-2);
+}
+
+.cls-10 {
+    fill: url(#linear-gradient-10);
+}
+
+.cls-11 {
+    fill: url(#linear-gradient-12);
+}
+
+.cls-12 {
+    mix-blend-mode: multiply;
+    opacity: .4;
+}
+
+.cls-12, .cls-13 {
+    fill: #d8dee8;
+}
+
+.cls-14 {
+    mask: url(#mask);
+}
+
+.cls-3 {
+    opacity: .3;
+}
+
+.cls-15 {
+    fill: url(#linear-gradient-4);
+}
+
+.cls-16 {
+    fill: url(#linear-gradient-3);
+}
+
+.cls-17 {
+    clip-path: url(#clippath-1);
+}
+
+.cls-18 {
+    fill: url(#linear-gradient-5);
+}
+
+.cls-19 {
+    isolation: isolate;
+}
+
+.cls-20 {
+    fill: url(#linear-gradient-8);
+}
+
+.cls-21 {
+    fill: url(#linear-gradient-14);
+}
+
+.cls-4 {
+    opacity: .56;
+}
+
+.cls-22 {
+    fill: url(#linear-gradient-7);
+}
+
+.cls-23 {
+    fill: url(#linear-gradient-9);
+}
+
+.cls-24 {
+    fill: url(#linear-gradient-11);
+}
+
+.cls-25 {
+    fill: url(#linear-gradient-6);
+}
+
+.cls-26 {
+    fill: #fcfdfe;
+}
+
+.cls-27 {
+    fill: url(#linear-gradient);
+}
+
+.cls-28 {
+    fill: #f4f7fa;
+}
+
+.cls-29 {
+    clip-path: url(#clippath);
+}
+
+.cls-30 {
+    fill: #f4f7fa;
+}

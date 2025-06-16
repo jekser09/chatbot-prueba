@@ -1,0 +1,108 @@
+.contenedorMainContenidoMenuUsuarios {
+    display: grid;
+    padding: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-auto-rows: auto;
+    gap: 20px;
+    justify-items: stretch;
+    align-items: start;
+}
+
+.contenedorUrlfuncinalidad {
+    background-color: #f8f8f8;
+    /* Un fondo suave */
+    border: 1px solid #ddd;
+    /* Un borde ligero */
+    border-radius: 8px;
+    /* Bordes redondeados */
+    padding: 15px;
+    /* Espacio interno */
+    text-align: center;
+    /* Centra el texto (<img> y <p>) dentro del div */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    /* Transición suave para hover */
+   background: radial-gradient(circle,rgba(204, 195, 171, 1) 14%, rgba(168, 163, 151, 1) 86%);
+}
+
+.contenedorUrlfuncinalidad:hover {
+    transform: translateY(-5px);
+    /* Efecto de elevación al pasar el ratón */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Sombra suave */
+}
+
+.contenedorUrlfuncinalidad:active {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Sombra suave */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contenedorUrlfuncinalidad a {
+    text-decoration: none;
+    /* Quita el subrayado del enlace */
+    color: inherit;
+    /* Hereda el color del texto del padre (.contenedorUrlfuncinalidad) */
+    display: flex;
+    /* Para controlar mejor imagen y texto */
+    flex-direction: column;
+    /* Apila imagen sobre texto */
+    align-items: center;
+    /* Centra imagen y texto horizontalmente */
+    gap: 8px;
+    /* Espacio entre imagen y texto */
+}
+
+.contenedorUrlfuncinalidad img {
+    max-width: 60px;
+    /* Limita el tamaño del icono */
+    height: auto;
+    /* Mantiene la proporción */
+}
+
+.contenedorUrlfuncinalidad p {
+    margin: 0;
+    /* Quita márgenes por defecto del párrafo */
+    font-size: 0.95em;
+    /* Tamaño de fuente ligeramente menor */
+    font-weight: bold;
+    /* Texto en negrita */
+}
+
+/* =========================================================== */
+/* === ESTILOS ESPECÍFICOS PARA MÓVIL (Contenido Principal) === */
+/* =========================================================== */
+@media (max-width: 600px) {
+
+    /* --- Ajustes para el Contenedor Principal en Móvil --- */
+    .contenedorMainContenidoMenuUsuarios {
+        display: grid;
+        grid-template-columns: 1fr;
+        row-gap: 15px;
+        /* Espacio vertical entre los items apilados */
+        /* No necesitamos overflow-x, flex-wrap, etc. */
+        overflow-x: initial;
+        /* Aseguramos que no haya scroll horizontal */
+        justify-items: stretch;
+        /* Hace que cada item ocupe el ancho de la columna (1fr) */
+        align-items: initial;
+        /* Reseteamos por si acaso */
+        padding: 15px;
+    }
+
+    /* --- Ajustes para Cada Item en Móvil --- */
+    .contenedorUrlfuncinalidad {
+        min-width: initial;
+        /* Reseteamos */
+        flex-shrink: initial;
+        /* Reseteamos */
+        /* padding: 10px; */
+    }
+
+    /* --- TIPOGRAFÍA PARA MÓVILES --- */
+    .contenedorEnlaces>li>a>p,
+    #btn-sal p {
+        font-size: 1.1em;
+    }
+
+}

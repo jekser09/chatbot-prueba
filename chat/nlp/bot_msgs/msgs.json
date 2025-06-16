@@ -1,0 +1,9 @@
+{
+    "BIENVENIDA":"Bienvenido Mi nombre es MUUU-BOT. Contestaré a tus preguntas acerca de nuestros productos. estare encantado de ayudarte",
+    "ERROR":"Lo siento no te he entendido, si aun no soy capaz de responderte por favor contacta con programador1@productoslacteospacos.com",
+    "SALUDAR":["Hola", "Hola, ¿Qué tal?", "Hola, ¿Cómo te puedo ayudar?", "Hola, encantado de hablar contigo","MUUUY buenos dias, ¿en qué puedo ayudarte hoy? 🐄☀️","MUUUCHAS gracias por tu consulta, ¡estoy aquí para ayudarte! 🤖🥛","¡Que tengas un día MUUUY cremoso y lleno de sabor! 🧀🌟","¿Necesitas leche, quesos o yogures? Estoy MUUUY listo para ayudarte. 🥛🧀","¡No te preocupes, estoy aquí para resolver tus dudas MUUUY rápido! ⚡🐄","Si tienes hambre, te recomiendo un snack MUUUY saludable... ¡queso fresco! 🧀😉","¡Aquí siempre tenemos el mejor queso, MUUUY maduro y delicioso! 🧀🐄, ¿que te apetece?"],
+    "DESPEDIDA":["con mucho gusto","que vuelvas pronto","si necesitas algo mas me vuelves a llamar","hasta luego","con mucho gusto","un gusto","nos caiste muy bien, esperamos volver a verte","espero que volvamos a hablar","encantado de conocerte"],
+    "HORARIOS":"Atendemos de lunes a viernes de 7AM a 5PM, y los sabados de 7AM a 12PM",
+    "CONTACTO":"Puedes comunicarte por el correo programador1@productoslacteospacos.com o al numero 3024649697",
+    "PRODUCTOS":true
+}

@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'CSS/menu_usuarios.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'IMG/Logo_Pacos.jpg' %}">
+    {% block extra_head %}
+    {% endblock extra_head %}
+    <title>{% block title %}Navbar{% endblock title %}</title>
+</head>
+<body>
+    <div class="contenedorMenu">
+        <div class="contenedorLogoYMenuToggle">
+            <a class="enlaceMenuAdmin" href="{% url 'menu_general' %}">
+                <div class="contenedorLogo">
+                    <img src="{% static '/IMG/logo_pacos.png' %}" alt="10%">
+                </div>
+            </a>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <nav class="navMenu desplegable">
+            <ul>
+                <div class="contenedorEnlaceYBtnSalir">
+                    <div class="contenedorEnlaces">
+                        {% if 'principal' != menu %}
+                            {% for url_menu, descripcion in request.session.lista_menus.items %}
+                                <li>
+                                    <a href="{% url url_menu %}">
+                                        <p>{{ descripcion }}</p>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="contenedorBtnSalir">
+                        <a href="{% url 'logout' %}"><button id="btn-sal" class="btn-all btn-out" type="button">
+                                <p>cerrar sesión</p>
+                            </button></a>
+                    </div>
+                </div>
+            </ul>
+        </nav>
+    </div>
+    {% block content %}
+    {% endblock content %}
+    {% block extra_scripts %}
+    {% endblock extra_scripts %}
+    <script src="{% static 'JS/logicMenuUsers.js' %}"></script>
+</body>
+</html>

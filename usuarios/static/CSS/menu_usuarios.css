@@ -1,0 +1,456 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', Helvetica, Arial, Lucida, sans-serif;
+}
+
+body {
+    background: #e8e8e8;
+}
+
+#btn-sal{
+    font-size: 16px !important;
+}
+
+/* Contenedor principal del menú */
+.contenedorMenu {
+    display: flex;
+    flex-direction: column;
+    background-color: #24252a;
+    color: white;
+    padding: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    align-items: center;
+    width: 100%;
+}
+
+.contenedorLogoYMenuToggle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-right: 15px;
+}
+
+.contenedorLogo {
+    border: none;
+    border-radius: 100%;
+    margin: 5px 0 5px 5px;
+    background-color: white;
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.contenedorLogo>img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+}
+
+.enlaceMenuAdmin {
+    transition: transform 0.2s ease;
+}
+
+.enlaceMenuAdmin:active {
+    transform: scale(1.05);
+}
+
+/* Botón hamburguesa */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    /* z-index se define en @media móvil */
+}
+
+.menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: white;
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+    transform-origin: center;
+}
+
+/* Menú de navegación */
+.navMenu {
+    width: 100%;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease-in-out;
+    position: static;
+    background-color: transparent;
+}
+
+.navMenu.abierto {
+    max-height: 500px;
+    /* overflow: visible; Se manejará en @media si es necesario */
+}
+
+/* Lista dentro del menú - ESTADO BASE */
+.navMenu>ul {
+    list-style: none;
+    padding: 5px;
+    /* Padding base mínimo */
+    display: flex;
+    flex-direction: column;
+    /* Por defecto móvil, se cambia en escritorio */
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.contenedorEnlaceYBtnSalir {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.contenedorEnlaces {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+
+.contenedorEnlaces>li {
+    display: block;
+    padding: 10px;
+    margin: 5px;
+    text-align: center;
+    width: 100%;
+    border-radius: 23px;
+    transition: background-color 0.19s ease, transform 0.3s ease;
+    align-items: flex-end;
+}
+
+.contenedorEnlaces>li:hover {
+    transform: scale(1.05);
+    border-radius: 30px;
+    background: #353536;
+    .contenedorEnlaces>li > a > p {
+        transform: scale(1.06);
+        color: #e8e8e8;
+    }
+}
+
+.contenedorEnlaces>li>a:active,
+#btn-sal:active {
+    transform: scale(0.95);
+}
+
+.contenedorEnlaces>li>a {
+    color: #e8e8e8;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+}
+
+.contenedorEnlaces>li>a>p {
+    margin: 0;
+    white-space: nowrap;
+}
+
+.contenedorBtnSalir {
+    margin: 15px 0;
+    display: flex;
+    justify-content: center;
+    width: 90%;
+}
+
+.contenedorBtnSalir> a {
+    text-decoration: none;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#btn-sal {
+    background: none;
+    padding: 10px;
+    border-radius: 15px;
+    transition: all 0.2s ease;
+    border: none;
+    width: 100%;
+    text-align: center;
+}
+
+#btn-sal p {
+    white-space: nowrap;
+    color: orange;
+    cursor: pointer;
+}
+
+#btn-sal:hover {
+    transform: scale(1.15);
+}
+
+.contenedorEnlaces>li>a>p:active,
+.contenedorEnlaces>li:active{
+    background: #353536;
+}
+
+#btn-sal:active{
+    background-color: orange;
+    border-radius: 20px;
+    transform: scale(0.95);
+}
+
+#btn-sal > p:active{
+    color: black;
+    transform: scale(0.95);
+}
+
+/* ============================================== */
+/* ===        MEDIA QUERIES: LAYOUT Y TIPO    === */
+/* ============================================== */
+
+/* --- Estilos para pantallas pequeñas (Móviles <= 600px) --- */
+@media (max-width: 600px) {
+
+    .menu-toggle {
+        display: flex;
+        margin-left: 10px;
+        padding: 3px;
+        border: solid 1px #5e6066;
+        border-radius: 5px;
+        z-index: 110;
+        /* Encima del menú */
+    }
+
+    .menu-toggle:active {
+        background-color: #79797a;
+    }
+
+    .menu-toggle.abierto span:nth-child(1) {
+        /* Mueve la primera barra hacia abajo y rótala 45 grados */
+        transform: translateY(5.5px) rotate(45deg);
+    }
+
+    .menu-toggle.abierto span:nth-child(2) {
+        /* Oculta la barra del medio */
+        opacity: 0;
+    }
+
+    .menu-toggle.abierto span:nth-child(3) {
+        /* Mueve la tercera barra hacia arriba y rótala -45 grados */
+        transform: translateY(-5.5px) rotate(-45deg);
+        /* Similar al translateY de la primera barra, pero en dirección opuesta. */
+    }
+
+    /* Reglas para .navMenu en móvil (Overlay) */
+    .navMenu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #24252a;
+        z-index: 50;
+        margin-top: 0;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        /* Mantiene overflow: hidden por defecto */
+    }
+
+    .navMenu.abierto {
+        overflow: visible;
+    }
+
+    .navMenu>ul {
+        /* Estado inicial oculto */
+        opacity: 0;
+        visibility: hidden;
+        /* Transición para la opacidad (con retraso) y visibilidad */
+        transition: opacity 0.2s ease-in-out 0.1s, visibility 0s linear 0.3s;
+
+        /* Estilos que ya tenías para bordes/padding */
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        padding-bottom: 10px;
+    }
+
+    .navMenu.abierto>ul {
+        opacity: 1;
+        visibility: visible;
+        /* Transición de apertura (sin retraso para visibility) */
+        transition: opacity 0.2s ease-in-out 0.1s, visibility 0s linear 0s;
+    }
+
+    /* Ancho de items internos */
+    .contenedorEnlaces>li {
+        width: 90%;
+    }
+
+    #btn-sal {
+        background: none;
+    }
+
+    /* Tipografía Móvil */
+    .contenedorEnlaces>li>a>p,
+    #btn-sal p {
+        font-size: 1.1em;
+    }
+}
+
+/* --- Estilos para pantallas medianas y grandes (Layout Escritorio >= 601px) --- */
+@media (min-width: 601px) {
+    .contenedorMenu {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .contenedorLogoYMenuToggle {
+        justify-content: flex-start;
+        width: auto;
+        padding-right: 10px;
+        flex-shrink: 0;
+    }
+
+    .menu-toggle {
+        display: none !important;
+    }
+
+    /* Resetea estilos de móvil */
+    .navMenu {
+        position: static;
+        display: flex;
+        max-height: none !important;
+        align-items: center;
+        flex-grow: 1;
+        justify-content: flex-end;
+        width: auto;
+        overflow: hidden;
+        transition: none;
+        margin-top: 0;
+        background-color: transparent;
+        z-index: auto;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .navMenu.abierto {
+        max-height: none !important;
+        overflow: visible;
+    }
+
+    .navMenu>ul {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        border-radius: 0;
+        /* Asegura visibilidad en escritorio */
+        opacity: 1;
+        visibility: visible;
+        transition: none;
+        /* Quita transición en escritorio */
+    }
+
+    .contenedorEnlaceYBtnSalir {
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        padding: 0 5px;
+        overflow: hidden;
+    }
+
+    .contenedor-degrade {
+        position: relative;
+        flex-grow: 1;       /* Ocupa el espacio disponible dejando sitio para el botón */
+        flex-shrink: 1;
+        min-width: 0;       /* Permite que se encoja y que el overflow del hijo funcione */
+        overflow: hidden;   /* Contiene a .contenedorEnlaces y los degradados por si acaso */
+        height: 100%;       /* Para que ocupe la altura de su padre si es necesario */
+        display: flex;      /* Para controlar el tamaño de .contenedorEnlaces si es necesario */
+    }
+
+    .contenedorEnlaces {
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .contenedorEnlaces>li {
+        display: block;
+        flex-shrink: 0;
+        margin: 0 10px;
+        width: auto;
+        text-align: left;
+    }
+
+    .contenedorEnlaces>li>a>p {
+        white-space: nowrap;
+    }
+
+    .contenedorBtnSalir {
+        flex-shrink: 0;
+        margin: 0;
+        margin-left: 10px;
+        width: auto;
+    }
+
+    #btn-sal {
+        width: auto;
+        padding: 8px 15px;
+    }
+
+    .contenedorEnlaces::-webkit-scrollbar {
+        height: 0;
+        width: 0;
+        background: transparent;
+    }
+
+    .contenedorEnlaces::-webkit-scrollbar-thumb:hover {
+        background: transparent
+    }
+}
+
+/* ============================================== */
+/* ===     MEDIA QUERIES: TIPOGRAFÍA > 600px  === */
+/* ============================================== */
+
+/* --- Tipografía para Pantallas Grandes (993px - 1199px) --- */
+@media (min-width: 993px) and (max-width: 1199px) {
+
+    .contenedorEnlaces>li>a>p,
+    #btn-sal p {
+        font-size: 1.05em;
+    }
+}
+
+/* --- Tipografía para Pantallas Muy Grandes (>= 1200px) --- */
+@media (min-width: 1200px) {
+
+    .contenedorEnlaces>li>a>p,
+    #btn-sal p {
+        font-size: 1.1em;
+    }
+}
